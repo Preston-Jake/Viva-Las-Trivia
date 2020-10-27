@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const Trivia = () => {
-    return (
-        <div>
-            <h1>Trivia</h1>
-        </div>
-    );
-}
+  return (
+    <div>
+      <h1>Trivia</h1>
+    </div>
+  );
+};
 
 export default Trivia;
