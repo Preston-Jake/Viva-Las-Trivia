@@ -18,8 +18,8 @@ const randomizeAnswers = (incorrect, correct) => {
 
 const Answers = (props) => {
   let randonizedAnswers = randomizeAnswers(props.incorrect, props.correct);
-
-return <div>{randonizedAnswers.map((answer) => <button>{answer}</button>)}</div>;
+  console.log(props)
+return <div>{randonizedAnswers.map((answer, index) => <button key={index} onClick={()=>{props.answerClick({answer})}} disabled={!props.buttonDisabled?"true":""}>{answer}</button>)}</div>;
 };
 
 export default Answers;

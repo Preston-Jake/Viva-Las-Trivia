@@ -20,16 +20,35 @@ const createRoundOfTrivia = (array, num) => {
 };
 
 const App = () => {
-  console.log("Rendering APP")
   const [round, setRound] = useState([]);
-
+  const [score, setScore] = useState(0);
+  const [questionIndex, setquestionIndex] = useState(0);
+  const [buttonDisabled, setButtonDisabled] = useState("false")
+  
   useEffect(() => {
-    setRound(createRoundOfTrivia(data, 10))
+    setRound(createRoundOfTrivia(data, 10));
     return () => {
       setRound([]);
     };
   }, []);
-  
+
+  const handleAnswerClick = (answer) => {
+    // check if correct
+    console.log("BANG!!", score)
+
+    setButtonDisabled('')
+
+    let correct = round[questionIndex].correct
+
+    if(answer.answer === correct){
+      setScore(score + 1)
+    }
+    // if(answer === correct){
+      // update score 
+    // }
+    // timer 5s => end fire off  new indexed question 
+  };
+
   return (
     <Router>
       <Switch>
@@ -37,10 +56,10 @@ const App = () => {
           <Home />
         </Route>
         <Route path="/trivia">
-          <Trivia round={round}/>
+          <Trivia round={round} questionIndex={questionIndex} answerClick={handleAnswerClick} buttonDisabled={buttonDisabled}/>
         </Route>
         <Route path="/scoreboard">
-          <Score />
+          <Score socre={score}/>
         </Route>
       </Switch>
     </Router>

@@ -5,15 +5,13 @@ import Round from "./Round";
 
 const Trivia = (props) => {
 
-  console.log(props)
-  const [questionIndex, setquestionIndex] = useState(0);
-
+  let questionIndex = props.questionIndex
 
   return (
     <div>
       <Round round={questionIndex}/>
-      <Question question={props.round[questionIndex].question}/>
-      <Answers incorrect={props.round[questionIndex].incorrect} correct={props.round[questionIndex].correct}/>
+      <Question question={props.round[questionIndex].question} />
+      <Answers incorrect={props.round[questionIndex].incorrect} correct={props.round[questionIndex].correct} answerClick={props.answerClick} buttonDisabled={props.buttonDisabled}/>
     </div>
   );
 };
