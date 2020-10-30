@@ -1,19 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Redirect } from "react-router-dom";
 import Answers from "./Answers";
 import Question from "./Question";
 import Round from "./Round";
 
 const Trivia = (props) => {
-
-  let questionIndex = props.questionIndex
-
-  return (
-    <div>
-      <Round round={questionIndex}/>
-      <Question question={props.round[questionIndex].question} />
-      <Answers incorrect={props.round[questionIndex].incorrect} correct={props.round[questionIndex].correct} answerClick={props.answerClick} buttonDisabled={props.buttonDisabled}/>
-    </div>
-  );
+  let round = props.round;
+  let questionIndex = props.questionIndex;
+  if (!round.length) {
+    return <Redirect to="/" />;
+  } else {
+    return (
+      <div>
+        <Round round={questionIndex} />
+        <Question question={round[questionIndex].question} />
+        <Answers
+          randomizedAnswers={props.randomizedAnswers}
+          incorrect={round[questionIndex].incorrect}
+          correct={round[questionIndex].correct}
+          answerClick={props.answerClick}
+          buttonDisabled={props.buttonDisabled}
+        />
+      </div>
+    );
+  }
 };
 
 export default Trivia;

@@ -1,25 +1,24 @@
 import React from "react";
-
-const randomizeAnswers = (incorrect, correct) => {
-  let answers = [...incorrect, correct];
-  let counter = answers.length;
-
-  while (counter > 0) {
-    let index = Math.floor(Math.random() * counter);
-
-    counter--;
-
-    let temp = answers[counter];
-    answers[counter] = answers[index];
-    answers[index] = temp;
-  }
-  return answers;
-};
+import { useHistory } from "react-router-dom";
 
 const Answers = (props) => {
-  let randonizedAnswers = randomizeAnswers(props.incorrect, props.correct);
-  console.log(props)
-return <div>{randonizedAnswers.map((answer, index) => <button key={index} onClick={()=>{props.answerClick({answer})}} disabled={!props.buttonDisabled?"true":""}>{answer}</button>)}</div>;
+  let randomizedAnswers = props.randomizedAnswers;
+  const history = useHistory();
+  return (
+    <div>
+      {randomizedAnswers.map((answer, index) => (
+        <button
+          disabled={props.buttonDisabled ? "true" : ""}
+          key={index}
+          onClick={() => {
+            props.answerClick(answer, history);
+          }}
+        >
+          {answer}
+        </button>
+      ))}
+    </div>
+  );
 };
 
 export default Answers;
