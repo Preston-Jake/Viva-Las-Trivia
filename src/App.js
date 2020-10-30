@@ -1,46 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import Trivia from "./Trivia";
 import Score from "./Score";
 import data from "./data/Apprentice_TandemFor400_Data.json";
 
-const createRoundOfTrivia = (array, num) => {
-  let round = [];
-  let randomNumbers = [];
-  while (num > randomNumbers.length) {
-    let randomNumber = Math.floor(Math.random() * array.length);
-    if (!randomNumbers.includes(randomNumber)) {
-      randomNumbers.push(randomNumber);
-      round.push(array[randomNumber]);
-    }
-  }
-  return round;
+const intialState = {
+  buttonDisabled: false,
+  nextQuestionTimerIsActive: false,
+  nextQuestionTimerSeconds: 3,
+  questionIndex: 0,
+  randomizedAnswers: [],
+  round: [],
+  score: 0,
+  stylesActive: false,
 };
 
 const App = () => {
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [nextQuestionTimerIsActive, setNextQuestionTimerIsActive] = useState(
-    false
+  const [buttonDisabled, setButtonDisabled] = useState(
+    intialState.buttonDisabled
   );
-  const [nextQuestionTimerSeconds, setnextQuestionTimerSeconds] = useState(3);
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const [randomizedAnswers, setRandomizedAnswers] = useState([]);
-  const [round, setRound] = useState([]);
-  const [score, setScore] = useState(0);
-  const [isNewGame, setIsNewGame] = useState(true);
-  const [isGameOver, setGameOver] = useState(false);
+  const [nextQuestionTimerIsActive, setNextQuestionTimerIsActive] = useState(
+    intialState.nextQuestionTimerIsActive
+  );
+  const [nextQuestionTimerSeconds, setnextQuestionTimerSeconds] = useState(
+    intialState.nextQuestionTimerSeconds
+  );
+  const [questionIndex, setQuestionIndex] = useState(intialState.questionIndex);
+  const [randomizedAnswers, setRandomizedAnswers] = useState(
+    intialState.randomizedAnswers
+  );
+  const [round, setRound] = useState(intialState.round);
+  const [score, setScore] = useState(intialState.score);
+  const [stylesActive, setStylesActive] = useState(intialState.stylesActive);
 
-  const handleAnswerClick = (answer, history) => {
-    setButtonDisabled(true);
-    checkAnswerAndUpdateScore(answer);
-    setNextQuestionTimerIsActive(true);
-    if(isGameOver === true){
-      history.push(`/scoreboard`);
-    }
+  const handleLetsPlay = (history) => {
+    setupNewGame();
+    history.push(`/trivia`);
   };
 
-  //handleClickPlay if !round.length fire off function to set up round data
+  const handleAnswerClick = (answer, history) => {
+    if (round.length - 1 === questionIndex) {
+      history.push(`/scoreboard`);
+    }
+    setButtonDisabled(true);
+    setStylesActive(true)
+    checkAnswerAndUpdateScore(answer);
+    setNextQuestionTimerIsActive(true);
+  };
+
+  const setupNewGame = () => {
+    let roundOfTrivia = createRoundOfTrivia(data, 10);
+    setRound(roundOfTrivia);
+    setQuestionIndex(intialState.questionIndex);
+    setScore(intialState.score);
+    let incorrectAnswers = roundOfTrivia[0].incorrect;
+    let correctAnswer = roundOfTrivia[0].correct;
+    let answers = shuffleAnswers(incorrectAnswers, correctAnswer);
+    setRandomizedAnswers(answers);
+  };
 
   const checkAnswer = (answer) => {
     let correct = round[questionIndex].correct;
@@ -73,77 +91,62 @@ const App = () => {
     return answers;
   };
 
-  useEffect(() => {
-    if (isNewGame) {
-      let roundOfTrivia = createRoundOfTrivia(data, 10);
-      setRound(roundOfTrivia);
-      setIsNewGame(false);
-    }
-
-    if (round.length && nextQuestionTimerIsActive === false && isGameOver === false) {
+  useLayoutEffect(() => {
+    if (round.length && questionIndex < round.length) {
       let incorrectAnswers = round[questionIndex].incorrect;
       let correctAnswer = round[questionIndex].correct;
-      let randomizedAnswers = shuffleAnswers(incorrectAnswers, correctAnswer);
-      setRandomizedAnswers(randomizedAnswers);
+      let answers = shuffleAnswers(incorrectAnswers, correctAnswer);
+      setRandomizedAnswers(answers);
     }
-    
+    return () => {};
+  }, [questionIndex, round]);
+
+  useEffect(() => {
     let interval = null;
 
     if (nextQuestionTimerSeconds === 0) {
-      setNextQuestionTimerIsActive(false);
+      setNextQuestionTimerIsActive(intialState.nextQuestionTimerIsActive);
+      setnextQuestionTimerSeconds(intialState.nextQuestionTimerSeconds);
       clearInterval(interval);
-      setnextQuestionTimerSeconds(3);
       setQuestionIndex(questionIndex + 1);
-      setButtonDisabled(false);
+      setButtonDisabled(intialState.buttonDisabled);
+      setStylesActive(intialState.stylesActive)
     }
 
-    
     if (nextQuestionTimerIsActive && nextQuestionTimerSeconds > 0) {
       interval = interval = setInterval(() => {
         setnextQuestionTimerSeconds(nextQuestionTimerSeconds - 1);
-      }, 100);
+      }, 1000);
     }
 
     if (!nextQuestionTimerIsActive) {
       clearInterval(interval);
     }
 
-    if(round.length && round.length - 1 === questionIndex){
-      setGameOver(true)
-    }
-
     return () => {
       clearInterval(interval);
     };
-  }, [
-    nextQuestionTimerIsActive,
-    nextQuestionTimerSeconds,
-    questionIndex,
-    round,
-  ]);
-
-  console.log("APP RENDERED");
-  console.log("ROUND:", round);
-  console.log("GAMEOVER",isGameOver);
+  }, [nextQuestionTimerIsActive, nextQuestionTimerSeconds, questionIndex]);
 
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home letsPlay={handleLetsPlay} />
         </Route>
         <Route path="/trivia">
           <Trivia
             answerClick={handleAnswerClick}
             buttonDisabled={buttonDisabled}
-            isGameOver={isGameOver}
+            nextQuestionTimerSeconds={nextQuestionTimerSeconds}
             questionIndex={questionIndex}
             randomizedAnswers={randomizedAnswers}
             round={round}
+            stylesActive={stylesActive}
           />
         </Route>
         <Route path="/scoreboard">
-          <Score score={score} />
+          <Score score={score} letsPlay={handleLetsPlay} />
         </Route>
       </Switch>
     </Router>
@@ -151,3 +154,16 @@ const App = () => {
 };
 
 export default App;
+
+const createRoundOfTrivia = (array, num) => {
+  let round = [];
+  let randomNumbers = [];
+  while (num > randomNumbers.length) {
+    let randomNumber = Math.floor(Math.random() * array.length);
+    if (!randomNumbers.includes(randomNumber)) {
+      randomNumbers.push(randomNumber);
+      round.push(array[randomNumber]);
+    }
+  }
+  return round;
+};

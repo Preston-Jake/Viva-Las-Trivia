@@ -1,7 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const Score = (props) => {
   let score = props.score;
+  let history = useHistory()
   const decimalToPrecent = (score) => {
     return (score / 10) * 100;
   };
@@ -13,7 +15,8 @@ const Score = (props) => {
         <h3>Correct {decimalToPrecent(score)}%</h3>
       </div>
       <div>
-        <button>Play Again</button>
+        <button onClick={()=>{props.letsPlay(history)}}>Play Again</button>
+        <button onClick={()=>{history.push(`/`)}}>Home</button>
       </div>
     </div>
   );

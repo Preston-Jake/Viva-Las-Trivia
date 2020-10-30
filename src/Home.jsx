@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const Home = () => {
-  return (
+
+const Home = (props) => {
+  let history = useHistory()
+    return (
     <div>
       <div>
         <h3>BECOME THE BEST</h3>
@@ -10,7 +12,7 @@ const Home = () => {
         <h3>PUT YOUR TRIVIA SKILLS TO THE TEST!</h3>
       </div>
       <div>
-        <Link to="/trivia">Let's Play</Link>
+        <button onClick={()=>{props.letsPlay(history)}}>Let's Play</button>
       </div>
     </div>
   );
