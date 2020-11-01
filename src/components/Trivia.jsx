@@ -4,6 +4,23 @@ import Answers from "./Answers";
 import Question from "./Question";
 import React, { useContext } from "react";
 import Round from "./DoubleCircleDiv";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+height: 100vh;
+  width: 100vw;
+  background: linear-gradient(
+    68.94deg,
+    #f97c76 2.55%,
+    #fc4387 29.82%,
+    #903795 61.53%,
+    #651866 93.58%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
 
 const Trivia = () => {
   console.log("RENDER TRIVIA");
@@ -19,11 +36,11 @@ const Trivia = () => {
     return null;
   } else {
     return (
-      <div>
+      <Wrapper>
         {/* <Round /> */}
         <Question />
         <Answers />
-      </div>
+      </Wrapper>
     );
   }
 };
