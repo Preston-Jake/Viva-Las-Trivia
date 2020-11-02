@@ -123,7 +123,7 @@ const Home = () => {
     <Wrapper>
       <BlurContainer>
         <BlurbOne>become the best</BlurbOne>
-        <BlurbTwo>put your skills to the test!</BlurbTwo>
+        <BlurbTwo>put your trivia skills to the test!</BlurbTwo>
       </BlurContainer>
       <Title>Viva Las Trivia</Title>
       <Button
