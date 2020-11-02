@@ -19,8 +19,12 @@ const Button = styled.button`
   width: 18rem;
   box-shadow: 0px 0px 16px #00ffff;
 
+  @media ${device.laptop} {
+    font-size: 2rem;
+    width: 24rem;
+  }
+
   ${({ correct, selected }) => {
-    console.log("selected / correct", selected, correct);
     if (correct) {
       return `
         border: 3px solid #01FD29;

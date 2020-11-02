@@ -24,7 +24,7 @@ const Title = styled.h2`
   }
   @media ${device.laptop}{
     font-size: 2rem;
-    margin-top: 10rem;
+    margin-top: 8rem;
   }
   @media ${device.desktop}{
     margin-top: 12rem;

@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   align-items: center;
-  background-color: #cccccc;
+  background-color: #000;
   background-image: url(${bgTrivia});
   background-position: center;
   background-repeat: no-repeat;

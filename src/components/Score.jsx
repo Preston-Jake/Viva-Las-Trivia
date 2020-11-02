@@ -3,26 +3,24 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { AppContext } from "../AppContext";
 import { device } from "../styled/device";
-
+import bgScore from "../images/score_bg.jpg"
 const decimalToPrecent = (score) => {
   return (score / 10) * 100;
 };
 
 const Wrapper = styled.div`
   align-items: center;
-  background: linear-gradient(
-    68.94deg,
-    #f97c76 2.55%,
-    #fc4387 29.82%,
-    #903795 61.53%,
-    #651866 93.58%
-  );
+  background-color: #000;
+  background-image: url(${bgScore});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: space-around;
   width: 100vw;
-  @media ${device.laptop}{
+  @media ${device.laptop} {
     justify-content: space-evenly;
   }
 `;
@@ -50,7 +48,7 @@ const Title = styled.h1`
   margin: 0 1rem;
   text-align: center;
   text-shadow: 0 0 1rem #00ffff;
-  @media ${device.tablet}{
+  @media ${device.tablet} {
     font-size: 4rem;
   }
 `;
@@ -66,7 +64,7 @@ const StyledScore = styled.h2`
   margin-top: 4rem;
   text-align: center;
   text-transform: uppercase;
-  @media ${device.tablet}{
+  @media ${device.tablet} {
     font-size: 4rem;
   }
 `;
@@ -82,7 +80,7 @@ const Percent = styled.h2`
   margin-top: 4rem;
   text-align: center;
   text-transform: uppercase;
-  @media ${device.tablet}{
+  @media ${device.tablet} {
     font-size: 2rem;
   }
 `;
