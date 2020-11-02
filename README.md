@@ -1,3 +1,44 @@
+# Tandem Code Challenge
+
+## Goal
+
+Your goal is to create an application that displays trivia questions with multiple-choice answers to select from.
+Use creative license in terms of how you want us to see this game. At minimum, the player can view the question(s), the answer choices, the correct answer upon submission, and their score. It could be a user interface (UI), command-line-tool, etc. Feel free to use whatever framework or language you are comfortable with.
+
+## Assumptions
+
+Markup : * A round of trivia has 10 Questions
+Markup : * All questions are multiple-choice questions
+Markup : * Your score does not need to update in real time
+Markup : * Results can update on form submit, button click, or any interaction you choose
+Markup : * We will provide you with the trivia data such as the questions, correct and incorrect answers via a JSON file.
+
+## Acceptance Criteria
+
+Markup : * A user can view questions.
+Markup : * Questions with their multiple choice options must be displayed one at a time.
+Markup : * Questions should not repeat in a round.
+Markup : * A user can select only 1 answer out of the 4 possible answers.
+Markup : * The correct answer must be revealed after a user has submitted their answer
+Markup : * A user can see the score they received at the end of the round
+
+## Wireframe
+
+https://www.figma.com/file/WKZ9xFgYTbrwwJZ2Yb5gWo/Viva-Las-Trivia?node-id=0%3A1
+
+## Dependencies 
+
+Markup : * styledComponents
+https://styled-components.com/
+
+Markup : * React Router
+https://reactrouter.com/
+
+## Running code
+
+yarn
+yarn start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
