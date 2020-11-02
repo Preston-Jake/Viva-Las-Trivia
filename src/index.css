@@ -22,6 +22,7 @@
   
   body {
     margin: 0;
+    box-sizing: border-box;
   }
   
   /**
@@ -346,4 +347,9 @@
   
   [hidden] {
     display: none;
+  }
+
+  @font-face {
+    font-family: 'Hyperviper';
+    src: url('./fonts/hypervipersuperital.ttf');
   }

@@ -9,23 +9,24 @@ const initialState = {
   questionIndex: 0,
   questions: [],
   score: 0,
+  selected: '',
   timer: 3,
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "answered":
-      return { ...state, answered: true };
+      const newScore = action.correct ? state.score + 1 : state.score
+      return { ...state, answered: true, score: newScore, selected: action.selected };
     case "decrementTimer":
       return { ...state, timer: state.timer - 1 };
     case "getQuestions":
       return { ...state, questions: getQuestions(data) };
-    case "incrementScore":
-      return { ...state, score: state.score + 1};
     case "nextQuestion":
       return {
         ...state,
         questionIndex: state.questionIndex + 1,
+        selected: "",
         answered: false,
       };
     case "reset":

@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { AppContext } from "../AppContext";
+import { device } from "../styled/device";
 
 const decimalToPrecent = (score) => {
   return (score / 10) * 100;
 };
 
 const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
+  align-items: center;
   background: linear-gradient(
     68.94deg,
     #f97c76 2.55%,
@@ -18,66 +18,85 @@ const Wrapper = styled.div`
     #651866 93.58%
   );
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  height: 100vh;
+  justify-content: space-around;
+  width: 100vw;
+  @media ${device.laptop}{
+    justify-content: space-evenly;
+  }
 `;
 
 const TitleContainer = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 200px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h1`
-  margin: 0;
-  font-family: "Yellowtail", cursive;
-  font-size: 144px;
-  letter-spacing: 10%;
-  display: flex;
+  -webkit-text-stroke: 1px #00ffff;
   align-items: center;
+  display: flex;
+  font-family: "Hyperviper";
+  font-size: 2rem;
+  justify-content: center;
+  letter-spacing: 0.2rem;
+  margin: 0 1rem;
   text-align: center;
-  letter-spacing: 1.25rem;
-  color: #e1ffff;
-  text-shadow: 0px 0px 16px #00ffff;
+  text-shadow: 0 0 1rem #00ffff;
+  @media ${device.tablet}{
+    font-size: 4rem;
+  }
 `;
 
-const Subtitle = styled.h2`
-  font-family: "Open Sans", sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 36px;
-  line-height: 49px;
-  display: flex;
+const StyledScore = styled.h2`
   align-items: center;
-  text-align: center;
-  letter-spacing: 0.5rem;
-
   color: #fff8f9;
+  display: flex;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 4rem;
+  text-align: center;
+  text-transform: uppercase;
+  @media ${device.tablet}{
+    font-size: 4rem;
+  }
+`;
+
+const Percent = styled.h2`
+  align-items: center;
+  color: #fff8f9;
+  display: flex;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 4rem;
+  text-align: center;
+  text-transform: uppercase;
+  @media ${device.tablet}{
+    font-size: 2rem;
+  }
 `;
 
 const Button = styled.button`
-  padding: 8px 72px;
-  background: rgba(0, 0, 0, 0.9);
-  border: 3px solid #f9ff0c;
-  box-sizing: border-box;
-  box-shadow: 0px 0px 16px #f9ff0c;
-  border-radius: 24px;
-  font-family: "Yellowtail", cursive;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 36px;
-  line-height: 49px;
-  margin: 0 4rem;
-  /* identical to box height */
-
-  color: #f9ff0c;
-
-  text-shadow: 0px 0px 4px #f9ff0c;
+  font-family: "Open Sans", sans-serif;
+  padding: 8px;
+  width: 280px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.1rem;
+  margin-bottom: 2rem;
 `;
 
 const Score = (props) => {
@@ -85,7 +104,6 @@ const Score = (props) => {
   const { state, dispatch } = useContext(AppContext);
   let score = state.score;
 
-  
   const handleLetsPlay = () => {
     dispatch({ type: "reset" });
     dispatch({ type: "getQuestions" });
@@ -95,8 +113,8 @@ const Score = (props) => {
     <Wrapper>
       <TitleContainer>
         <Title>Scoreboard</Title>
-        <Subtitle>{score}/10</Subtitle>
-        <Subtitle>Correct {decimalToPrecent(score)}%</Subtitle>
+        <StyledScore>{score}/10</StyledScore>
+        <Percent>Correct {decimalToPrecent(score)}%</Percent>
       </TitleContainer>
       <ButtonContainer>
         <Button

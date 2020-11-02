@@ -2,65 +2,72 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { AppContext } from "../AppContext";
+import { device } from "../styled/device";
+
 const Button = styled.button`
   border: 3px solid #00ffff;
   box-sizing: border-box;
-  filter: drop-shadow(0px 0px 16px #00ffff);
+  color: white;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
   border-radius: 24px;
   display: block;
   background-color: transparent;
   font-size: 1.5rem;
   margin: 1rem;
-  padding: 0.25rem 1rem;
+  padding: 0.2rem;
+  width: 18rem;
+  box-shadow: 0px 0px 16px #00ffff;
 
-  ${({ correct }) =>
-    correct &&
-    `
-    border: 3px solid #01FD29;
+  ${({ correct, selected }) => {
+    console.log("selected / correct", selected, correct);
+    if (correct) {
+      return `
+        border: 3px solid #01FD29;
     box-sizing: border-box;
+    box-shadow: 0px 0px 16px #01FD29, 0px 0px 16px #01FD29;
     filter: drop-shadow(0px 0px 16px #01FD29);
     border-radius: 24px;
-  `}
-  ${({ incorrect }) =>
-    incorrect &&
-    `
-    border: 3px solid #FD015B;
-    box-sizing: border-box;
-    filter: drop-shadow(0px 0px 16px #FD015B);
-    border-radius: 24px;
-  `}
+      `;
+    }
+    if (selected && !correct) {
+      return `
+      border: 3px solid #FD015B;
+      box-sizing: border-box;
+      filter: drop-shadow(0px 0px 16px #FD015B);
+      border-radius: 24px;
+      box-shadow: 0px 0px 8px #FD015B;
+    `;
+    }
+  }}
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  &.answered {
-    btn {
-      background: red;
-      &.correct {
-        background: green;
-      }
-    }
+  flex-direction: column; 
+  @media ${device.mobileM}{
+    margin-bottom: 4rem;
+  }
+  @media ${device.tablet}{
+    margin-bottom: 6rem;
+    font-size: 2rem;
+  }
+  @media ${device.laptop}{
+    font-size: 2rem;
+    margin-bottom: 10rem;
+  }
+  @media ${device.desktop}{
+    margin-bottom: 12rem;
   }
 `;
 
 const Answers = () => {
-  console.log("RENDER ANSWERS");
   const { state, dispatch } = useContext(AppContext);
-  console.log(state);
-  const { answered, questionIndex, questions } = state;
-  const answers = questions[questionIndex].answers;
-  const correct = questions[questionIndex].correct;
-  const incorrect = questions[questionIndex].incorrect;
+  const { answered, questionIndex, questions, selected } = state;
+  const { answers, correct } = questions[questionIndex];
 
-  console.log(incorrect)
-
-  let handleAnswerClick = (answer) => {
-    // not incrementing score evereything seem right in context and here????
-    // this might need to be in useEffect?? ... i guess but idk
-    if (answer === correct) {
-      dispatch({ tpye: "incrementScore" });
-    }
-    dispatch({ type: "answered" });
+  const handleAnswerClick = (answer) => {
+    dispatch({ type: "answered", correct: answer === correct, selected: answer });
     setTimeout(() => {
       dispatch({ type: "nextQuestion" });
     }, 2000);
@@ -71,11 +78,11 @@ const Answers = () => {
       {answers.map((answer, index) => {
         return (
           <Button
+            selected={selected === answer && answered}
             correct={answer === correct && answered}
-            incorrect={incorrect.includes(answer) && answered}
             disabled={answered ? true : ""}
             key={index}
-            onClick={() => handleAnswerClick(answer)}
+            onClick={() => {handleAnswerClick(answer)}}
           >
             {answer}
           </Button>

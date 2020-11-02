@@ -1,29 +1,26 @@
 import { AppContext } from "../AppContext";
 import { useHistory } from "react-router-dom";
 import Answers from "./Answers";
+import bgTrivia from "../images/trivia_bg.jpg";
 import Question from "./Question";
 import React, { useContext } from "react";
-import Round from "./DoubleCircleDiv";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-height: 100vh;
-  width: 100vw;
-  background: linear-gradient(
-    68.94deg,
-    #f97c76 2.55%,
-    #fc4387 29.82%,
-    #903795 61.53%,
-    #651866 93.58%
-  );
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: #cccccc;
+  background-image: url(${bgTrivia});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
   flex-direction: column;
-`
+  height: 100vh;
+  justify-content: space-between;
+  width: 100vw;
+`;
 
 const Trivia = () => {
-  console.log("RENDER TRIVIA");
   const history = useHistory();
   const { state } = useContext(AppContext);
   const { questions, questionIndex } = state;
@@ -37,7 +34,6 @@ const Trivia = () => {
   } else {
     return (
       <Wrapper>
-        {/* <Round /> */}
         <Question />
         <Answers />
       </Wrapper>
