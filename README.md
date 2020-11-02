@@ -1,5 +1,7 @@
 # Tandem Code Challenge
 
+![alt text](https://user-images.githubusercontent.com/39278598/97824758-6c1b8080-1c82-11eb-8722-27e95d96e596.png)
+
 ## Goal
 
 Your goal is to create an application that displays trivia questions with multiple-choice answers to select from.
