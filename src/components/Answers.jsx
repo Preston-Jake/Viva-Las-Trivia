@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { AppContext } from "../AppContext";
 import { device } from "../styled/device";
 
@@ -96,14 +95,4 @@ const Answers = () => {
   );
 };
 
-Answers.propTypes = {
-  handleAnswerClick: PropTypes.func,
-  buttonDisabled: PropTypes.bool,
-  correct: PropTypes.string,
-  randomizedAnswers: PropTypes.array,
-  stylesActive: PropTypes.bool,
-};
-
 export default Answers;
-
-// button onClick need to know if you selected the right answer and then update your score and then change the question index to the next

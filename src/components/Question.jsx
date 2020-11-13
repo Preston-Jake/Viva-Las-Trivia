@@ -42,6 +42,4 @@ const Question = (props) => {
   );
 };
 
-Question.propTypes = {};
-
 export default Question;

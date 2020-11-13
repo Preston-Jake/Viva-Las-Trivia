@@ -44,6 +44,17 @@ const Title = styled.h1`
   }
 `;
 
+const BlurContainer = styled.div`
+  align-items: center;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @media ${device.laptop} {
+    align-self: center;
+  }
+`;
+
 const BlurbOne = styled.h2`
   font-family: "Open Sans", sans-serif;
   font-size: 1.125rem;
@@ -62,33 +73,9 @@ const BlurbOne = styled.h2`
     font-size: 4rem;
   }
 `;
-const BlurbTwo = styled.h2`
-  align-items: center;
-  color: #fff8f9;
-  display: flex;
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.125rem;
-  font-weight: bold;
-  margin-bottom: 0;
-  text-align: center;
-  text-transform: uppercase;
-  @media ${device.tablet} {
-    font-size: 2rem;
-  }
-  @media ${device.desktop} {
-    font-size: 4rem;
-  }
-`;
 
-const BlurContainer = styled.div`
-  align-items: center;
-  align-self: flex-start;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  @media ${device.laptop} {
-    align-self: center;
-  }
+const BlurbTwo = styled(BlurbOne)`
+  margin-top: 1rem;
 `;
 
 const Button = styled.button`

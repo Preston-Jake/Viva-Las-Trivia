@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { AppContext } from "../AppContext";
 import { device } from "../styled/device";
 import bgScore from "../images/score_bg.jpg"
+
 const decimalToPrecent = (score) => {
   return (score / 10) * 100;
 };

@@ -10,7 +10,6 @@ const initialState = {
   questions: [],
   score: 0,
   selected: '',
-  timer: 3,
 };
 
 function reducer(state, action) {
@@ -18,8 +17,6 @@ function reducer(state, action) {
     case "answered":
       const newScore = action.correct ? state.score + 1 : state.score
       return { ...state, answered: true, score: newScore, selected: action.selected };
-    case "decrementTimer":
-      return { ...state, timer: state.timer - 1 };
     case "getQuestions":
       return { ...state, questions: getQuestions(data) };
     case "nextQuestion":
@@ -33,8 +30,6 @@ function reducer(state, action) {
       return { ...initialState };
     case "restAnswered":
       return { ...state, answered: initialState.answered };
-    case "restTimer":
-      return { ...state, timer: initialState.timer };
     default:
       return state;
   }
